@@ -11,5 +11,9 @@ namespace RockPaperScissorsGame.Domaine.GameAction
         List<Type> Beats { get; }
 
         string Name { get; }
+
+        string Letter { get; }
+
+        string NameWithLetter { get; }
     }
 }

@@ -22,9 +22,9 @@ namespace RockPaperScissorsGame.Domaine
 
         public void Start()
         {
-            _uIInterface.WriteLine("Do you want to play ? [Y]es to play, or any another key to leave");
-            var line = _uIInterface.ReadLine();
-            if (!string.IsNullOrEmpty(line) && line.ToUpper() == "Y")
+            var answersAllow = new List<string>() { "Y", "N"};
+            var answer = _uIInterface.Question("Do you want to play ? [Y]es, [N]o", answersAllow);
+            if (answer == "Y")
             {
                 New();
             }
@@ -32,7 +32,7 @@ namespace RockPaperScissorsGame.Domaine
 
         private void New()
         {
-            _uIInterface.WriteLine("Game is begging");
+            _uIInterface.WriteLine("Game is beginning");
             Process();
             Start();
         }
@@ -48,52 +48,38 @@ namespace RockPaperScissorsGame.Domaine
                 roundNumber += 1;
                 ProcessRound(roundNumber);
             }
-            _uIInterface.WriteLine($"{WiningPlayer.Name} wins the game with {WiningPlayer.WiningRounds} wins");
+            _uIInterface.WriteLine($"{WiningPlayer.Name} wins the game with {WiningPlayer.WiningRounds} victories");
         }
 
         private IPlayer SetPlayerTwo()
         {
-            _uIInterface.WriteLine("Do you want to play against [B]ot or [H]uman ?");
-            var line = _uIInterface.ReadLine();
-            if (!string.IsNullOrEmpty(line))
+            var answersAllow = new List<string>() { "B", "H" };
+            var answer = _uIInterface.Question("Do you want to play against [B]ot or [H]uman ?", answersAllow);
+            
+            if (answer.ToUpper() == "B")
             {
-                if (line.ToUpper() == "B")
-                {
-                    return SetBotType();
-                }
-                if (line.ToUpper() == "H")
-                {
-                    return new Human(_uIInterface) { Name = "Player Two" };
-                }
+                return SetBotType();
             }
-            _uIInterface.WriteLine($"Not a valid option");
-            return SetPlayerTwo();
+            return new Human(_uIInterface) { Name = "Player Two" };
         }
 
         private IPlayer SetBotType()
         {
-            _uIInterface.WriteLine("What kind of Bot [O]ld version or [N]ew version ?");
-            var line = _uIInterface.ReadLine();
-            if (!string.IsNullOrEmpty(line))
+            var answersAllow = new List<string>() { "O", "N" };
+            var answer = _uIInterface.Question("What kind of Bot, [O]ld version or [N]ew version ?", answersAllow);
+
+            if (answer == "N")
             {
-                if (line.ToUpper() == "O")
-                {
-                    return new Bot(_uIInterface) { Name = "Player Two" };
-                }
-                if (line.ToUpper() == "N")
-                {
-                    return new NewBot(_uIInterface) { Name = "Player Two" };
-                }
+                return new NewBot(_uIInterface) { Name = "Player Two" };
             }
-            _uIInterface.WriteLine($"Not a valid option");
-            return SetBotType();
+            return new Bot(_uIInterface) { Name = "Player Two" };
         }
 
         private void ProcessRound(int roundNumber)
         {
             var round = new Round(_uIInterface, PlayerOne, PlayerTwo, _actionOptionComparer, roundNumber);
             round.Start();
-            _uIInterface.WriteLine($"{PlayerOne.Name}, {PlayerOne.WiningRounds} wins - {PlayerTwo.Name}, {PlayerTwo.WiningRounds} wins");
+            _uIInterface.WriteLine($"{PlayerOne.Name}, {PlayerOne.WiningRounds} victories - {PlayerTwo.Name}, {PlayerTwo.WiningRounds} victories");
         }
 
         private IPlayer? WiningPlayer

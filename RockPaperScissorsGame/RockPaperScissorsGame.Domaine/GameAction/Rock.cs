@@ -19,5 +19,15 @@ namespace RockPaperScissorsGame.Domaine.GameAction
         {
             get { return "Rock"; }
         }
+
+        public string Letter
+        {
+            get { return "R"; }
+        }
+
+        public string NameWithLetter
+        {
+            get { return "[R]ock"; }
+        }
     }
 }

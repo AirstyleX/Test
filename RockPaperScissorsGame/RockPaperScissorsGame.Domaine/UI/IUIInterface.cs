@@ -10,6 +10,7 @@ namespace RockPaperScissorsGame
     {
         void WriteLine(string s);
         string? ReadLine();
+        string Question(string question, List<string> answersAllow);
         void MakeASeparation();
     }
 }

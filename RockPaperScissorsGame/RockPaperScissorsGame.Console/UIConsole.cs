@@ -22,5 +22,18 @@ namespace RockPaperScissorsGame.Console
         {
             System.Console.WriteLine("---------------------------------------------------------------------------");
         }
+
+        public string Question(string question, List<string> answersAllow)
+        {
+            WriteLine(question);
+            var line = ReadLine();
+            if (!string.IsNullOrEmpty(line))
+            {
+                if (answersAllow.Contains(line.ToUpper()))
+                    return line.ToUpper();
+            }
+            WriteLine($"Not a valid option");
+            return Question(question, answersAllow);
+        }
     }
 }

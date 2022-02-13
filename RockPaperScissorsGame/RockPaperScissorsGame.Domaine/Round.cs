@@ -23,7 +23,7 @@ namespace RockPaperScissorsGame.Domaine
         public void Start()
         {
             _uIInterface.MakeASeparation();
-            _uIInterface.WriteLine($"Round {_roundNumber} is begining...");
+            _uIInterface.WriteLine($"Round {_roundNumber} is beginning...");
             Process();
         }
 
@@ -51,20 +51,20 @@ namespace RockPaperScissorsGame.Domaine
             if (resultBoard[_playerOne] == resultBoard[_playerTwo]
                 || compareResult == 0)
             {
-                _uIInterface.WriteLine($"No player wins, Round {_roundNumber} is restarting...");
+                _uIInterface.WriteLine($"No player wins, round {_roundNumber} is restarting...");
                 Start();
             }
 
             if (compareResult == 1)
             {
                 _playerTwo.WiningRounds += 1;
-                _uIInterface.WriteLine($"{_playerTwo.Name} wins the Round {_roundNumber}");
+                _uIInterface.WriteLine($"{_playerTwo.Name} wins the round {_roundNumber}");
             }
 
             if (compareResult == -1)
             {
                 _playerOne.WiningRounds += 1;
-                _uIInterface.WriteLine($"{_playerOne.Name} wins the Round {_roundNumber}");
+                _uIInterface.WriteLine($"{_playerOne.Name} wins the round {_roundNumber}");
             }
         }
     }

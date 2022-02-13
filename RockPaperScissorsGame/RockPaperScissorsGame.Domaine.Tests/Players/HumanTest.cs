@@ -1,6 +1,7 @@
 ﻿using Moq;
 using RockPaperScissorsGame.Domaine.GameAction;
 using RockPaperScissorsGame.Domaine.Players;
+using System.Collections.Generic;
 using Xunit;
 
 namespace RockPaperScissorsGame.Domaine.Tests
@@ -16,7 +17,7 @@ namespace RockPaperScissorsGame.Domaine.Tests
         [Fact]
         public void HumanTurnToPlay_PlayAR_ReturnARock()
         {
-            _mockUIInterface.Setup(f => f.ReadLine()).Returns("R");
+            _mockUIInterface.Setup(f => f.Question(It.IsAny<string>(), It.IsAny<List<string>>())).Returns("R");
             var cut = new Human(_mockUIInterface.Object);
 
             var result = cut.Play();
@@ -27,7 +28,7 @@ namespace RockPaperScissorsGame.Domaine.Tests
         [Fact]
         public void HumanTurnToPlay_PlayAS_ReturnAScissorsk()
         {
-            _mockUIInterface.Setup(f => f.ReadLine()).Returns("S");
+            _mockUIInterface.Setup(f => f.Question(It.IsAny<string>(), It.IsAny<List<string>>())).Returns("S");
             var cut = new Human(_mockUIInterface.Object);
 
             var result = cut.Play();
@@ -38,23 +39,12 @@ namespace RockPaperScissorsGame.Domaine.Tests
         [Fact]
         public void HumanTurnToPlay_PlayAP_ReturnAPaper()
         {
-            _mockUIInterface.Setup(f => f.ReadLine()).Returns("P");
+            _mockUIInterface.Setup(f => f.Question(It.IsAny<string>(), It.IsAny<List<string>>())).Returns("P");
             var cut = new Human(_mockUIInterface.Object);
 
             var result = cut.Play();
 
             Assert.Equal(typeof(Paper), result.GetType());
-        }
-
-        [Fact]
-        public void HumanTurnToPlay_PlayANotValidOption_DisplayNotValidOption()
-        {
-            _mockUIInterface.SetupSequence(f => f.ReadLine()).Returns("Z").Returns("R");
-            var cut = new Human(_mockUIInterface.Object);
-
-            var result = cut.Play();
-
-            _mockUIInterface.Verify(f => f.WriteLine("Not a valid option"));
         }
     }
 }

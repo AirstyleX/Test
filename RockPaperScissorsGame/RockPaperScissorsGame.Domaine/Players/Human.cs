@@ -10,22 +10,13 @@ namespace RockPaperScissorsGame.Domaine.Players
 
         public IActionOption Play()
         {
-            uIInterface.WriteLine($"{Name}, choose an option ([R]ock, [P]aper, [S]cissors) :");
-            var line = uIInterface.ReadLine();
-            if (!string.IsNullOrEmpty(line))
-            {
-                switch (line.ToUpper())
-                {
-                    case "R":
-                        return new Rock();
-                    case "P":
-                        return new Paper();
-                    case "S":
-                        return new Scissors();
-                }
-            }
-            uIInterface.WriteLine($"Not a valid option");
-            return Play();
+            var listActionOption = GetListActionOption();
+            var answerAllows = listActionOption.Select(f => f.Letter).ToList();
+            var displayActionOptions = string.Join(", ", listActionOption.Select(f => f.NameWithLetter));
+
+            var answer = uIInterface.Question($"{Name}, choose an option ({displayActionOptions}) :", answerAllows);
+
+            return listActionOption.First(f => f.Letter == answer);
         }
     }
 }
